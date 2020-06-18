@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.fruits_layout.*
 class MainActivity : AppCompatActivity() {
 
     lateinit var fruitsViewModel: FruitsViewModel
-    lateinit var adapter:FruitsAdapter
+    lateinit var adapter: FruitsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
             ).get(FruitsViewModel::class.java)
 
         fruitsViewModel.fruits.observe(this, Observer {
-            adapter.submitBooks(it)
+            adapter.submitFruits(it)
         })
 
         fruitsViewModel.filterName.observe(this, Observer {
@@ -39,9 +39,6 @@ class MainActivity : AppCompatActivity() {
         adapter = FruitsAdapter()
         list.adapter = adapter
 
-      binding.viewmodel = fruitsViewModel
-
-
-
+        binding.viewmodel = fruitsViewModel
     }
 }

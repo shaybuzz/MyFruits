@@ -9,6 +9,9 @@ class FruitsRepo {
 
     private val network = Network()
     private var currFilter: String = ""
+    private val _fruits: MutableLiveData<MutableList<FruitItem>> =
+        MutableLiveData<MutableList<FruitItem>>()
+    val fruits: LiveData<MutableList<FruitItem>> = _fruits
 
     init {
         network.addListener(object : Network.FruitListener {
@@ -19,7 +22,6 @@ class FruitsRepo {
                     _fruits.postValue(fruits)
                 }
             }
-
         })
     }
 
@@ -42,11 +44,4 @@ class FruitsRepo {
             }
         }
     }
-
-
-    private val _fruits: MutableLiveData<MutableList<FruitItem>> =
-        MutableLiveData<MutableList<FruitItem>>()
-    val fruits: LiveData<MutableList<FruitItem>> = _fruits
-
-
 }

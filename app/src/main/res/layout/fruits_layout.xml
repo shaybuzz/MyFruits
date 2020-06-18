@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewmodel"
             type="com.tut.mywebsocket.view.FruitsViewModel" />
@@ -20,8 +21,8 @@
             android:layout_width="0dp"
             android:layout_height="56dp"
             android:background="@color/design_default_color_secondary"
-            android:text="Incoming Item Feed"
             android:gravity="center"
+            android:text="Incoming Item Feed"
             android:textColor="#fff"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -34,8 +35,8 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="77dp"
             android:layout_marginEnd="19dp"
-            android:text="Start"
             android:onClick="@{()-> viewmodel.onStart()}"
+            android:text="Start"
             app:layout_constraintEnd_toStartOf="@+id/inputFruit"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -45,8 +46,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Stop"
             android:onClick="@{()-> viewmodel.onStop()}"
+            android:text="Stop"
             app:layout_constraintEnd_toEndOf="@+id/btnStart"
             app:layout_constraintTop_toBottomOf="@+id/btnStart" />
 

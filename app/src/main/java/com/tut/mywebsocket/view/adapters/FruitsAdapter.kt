@@ -28,7 +28,7 @@ class FruitsAdapter : RecyclerView.Adapter<FruitsAdapter.FruitViewHolder>() {
         holder.binding.executePendingBindings()
     }
 
-    fun submitBooks(newFruits: MutableList<FruitItem>) {
+    fun submitFruits(newFruits: MutableList<FruitItem>) {
         //could be better to use DiffUtils for better performance
         fruits = newFruits
         notifyDataSetChanged()

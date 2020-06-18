@@ -10,7 +10,6 @@ import com.tut.mywebsocket.repository.FruitsRepo
 class FruitsViewModel(application: Application) : AndroidViewModel(application) {
     private val fruitsRepo = FruitsRepo()
     val fruits = fruitsRepo.fruits
-
     val filterName: MutableLiveData<String> = MutableLiveData()
 
     fun onStart() {
@@ -24,7 +23,6 @@ class FruitsViewModel(application: Application) : AndroidViewModel(application) 
     fun filter(name: String) {
         fruitsRepo.filter(name)
     }
-
 }
 
 @Suppress("UNCHECKED_CAST")
@@ -36,5 +34,4 @@ class FruitsViewModelFactory(val application: Application) :
         }
         throw IllegalArgumentException()
     }
-
 }

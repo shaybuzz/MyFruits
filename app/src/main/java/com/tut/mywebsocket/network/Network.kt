@@ -10,41 +10,35 @@ import okhttp3.WebSocketListener
 
 class Network {
 
+    private val URL = "ws://superdo-groceries.herokuapp.com/receive"
+    private val client: OkHttpClient = OkHttpClient()
+    private var listen = false
+    private var fruitListener: Network.FruitListener? = null
+
     interface FruitListener {
         fun onFruit(fruitItem: FruitItem)
 
     }
 
-    private var fruitListener: Network.FruitListener? = null
-
-
-    fun addListener(theFruitListener: FruitListener) {
-        fruitListener = theFruitListener
-    }
-
-    private val client: OkHttpClient = OkHttpClient()
-    private var listen = false
-
     init {
         val request: Request =
-            Request.Builder().url("ws://superdo-groceries.herokuapp.com/receive").build()
+            Request.Builder().url(URL).build()
         val ws = client.newWebSocket(request, object : WebSocketListener() {
 
             override fun onMessage(webSocket: WebSocket, text: String) {
                 super.onMessage(webSocket, text)
                 if (listen) {
-                    val fruit = Gson().fromJson<FruitItem>(text, FruitItem::class.java)
+                    val fruit: FruitItem = Gson().fromJson(text, FruitItem::class.java)
                     fruitListener?.onFruit(fruit)
-                    // Log.d("###", "### fruit $fruit")
                 }
-
-
             }
-
         })
         client.dispatcher.executorService.shutdown()
     }
 
+    fun addListener(theFruitListener: FruitListener) {
+        fruitListener = theFruitListener
+    }
 
     fun start() {
         listen = true
@@ -53,5 +47,4 @@ class Network {
     fun stop() {
         listen = false
     }
-
 }

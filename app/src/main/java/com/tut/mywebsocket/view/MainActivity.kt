@@ -22,6 +22,8 @@ class MainActivity : AppCompatActivity() {
         val binding: FruitsLayoutBinding =
             DataBindingUtil.setContentView(this, R.layout.fruits_layout)
 
+        title = getString(R.string.title_feed)
+
         fruitsViewModel =
             ViewModelProvider(
                 this,
@@ -30,10 +32,6 @@ class MainActivity : AppCompatActivity() {
 
         fruitsViewModel.fruits.observe(this, Observer {
             adapter.submitFruits(it)
-        })
-
-        fruitsViewModel.filterName.observe(this, Observer {
-            fruitsViewModel.filter(it)
         })
 
         adapter = FruitsAdapter()

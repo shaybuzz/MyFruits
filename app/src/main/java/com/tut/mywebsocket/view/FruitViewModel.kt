@@ -1,16 +1,34 @@
 package com.tut.mywebsocket.view
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.databinding.Observable
+import androidx.databinding.ObservableField
+import androidx.lifecycle.*
 import com.tut.mywebsocket.repository.FruitsRepo
 
 class FruitsViewModel(application: Application) : AndroidViewModel(application) {
     private val fruitsRepo = FruitsRepo()
     val fruits = fruitsRepo.fruits
-    val filterName: MutableLiveData<String> = MutableLiveData()
+    val filterName = ObservableField<String>()
+    private val propertyCallBack = object :Observable.OnPropertyChangedCallback(){
+        override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
+            sender?.let {
+                (sender as ObservableField<String>).get()?.let {prefix->
+                    fruitsRepo.filter(prefix)
+                }
+            }
+        }
+    }
+
+    init {
+        filterName.addOnPropertyChangedCallback(propertyCallBack)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        filterName.removeOnPropertyChangedCallback(propertyCallBack)
+    }
+
 
     fun onStart() {
         fruitsRepo.startListen()
@@ -20,9 +38,6 @@ class FruitsViewModel(application: Application) : AndroidViewModel(application) 
         fruitsRepo.stopListen()
     }
 
-    fun filter(name: String) {
-        fruitsRepo.filter(name)
-    }
 }
 
 @Suppress("UNCHECKED_CAST")

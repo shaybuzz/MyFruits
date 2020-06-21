@@ -9,20 +9,29 @@ class FruitsRepo {
 
     private val network = Network()
     private var currFilter: String = ""
-    private val _fruits: MutableLiveData<MutableList<FruitItem>> =
-        MutableLiveData<MutableList<FruitItem>>()
-    val fruits: LiveData<MutableList<FruitItem>> = _fruits
+
+    private var allFruits = mutableListOf<FruitItem>()
+
+    private var _fruits: MutableLiveData<List<FruitItem>> = MutableLiveData()
+    var fruits: LiveData<List<FruitItem>> = _fruits
 
     init {
         network.addListener(object : Network.FruitListener {
             override fun onFruit(fruitItem: FruitItem) {
-                val fruits = _fruits.value.orEmpty().toMutableList()
-                if (currFilter == "" || fruitItem.name.startsWith(currFilter)) {
-                    fruits.add(0, fruitItem)
-                    _fruits.postValue(fruits)
-                }
+                allFruits.add(0, fruitItem)
+                updateWatchFruits()
             }
         })
+    }
+
+    fun updateWatchFruits() {
+        var watchFruitList: List<FruitItem> = allFruits
+        if (currFilter.isNotEmpty()) {
+            watchFruitList = allFruits.filter {
+                it.name.startsWith(currFilter)
+            }
+        }
+        _fruits.postValue(watchFruitList)
     }
 
     fun startListen() {
@@ -33,15 +42,7 @@ class FruitsRepo {
         network.stop()
     }
 
-    fun filter(name: String) {
-        currFilter = name
-        if (!name.isEmpty()) {
-            val newList = _fruits.value?.filter {
-                it.name.startsWith(name)
-            }
-            newList?.let {
-                _fruits.postValue(it as MutableList<FruitItem>?)
-            }
-        }
+    fun filter(prefix: String) {
+        currFilter = prefix
     }
 }

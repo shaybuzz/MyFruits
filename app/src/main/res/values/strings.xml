@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">MyWebSocket</string>
+    <string name="app_name">Screenovate Task</string>
+    <string name="title_feed">Incomming Item Feed</string>
 </resources>

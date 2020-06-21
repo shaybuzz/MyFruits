@@ -8,7 +8,7 @@ import com.tut.mywebsocket.model.FruitItem
 
 class FruitsAdapter : RecyclerView.Adapter<FruitsAdapter.FruitViewHolder>() {
 
-    private var fruits: MutableList<FruitItem> = arrayListOf()
+    private var fruits: List<FruitItem> = arrayListOf()
 
     inner class FruitViewHolder(val binding: FruitItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -28,7 +28,7 @@ class FruitsAdapter : RecyclerView.Adapter<FruitsAdapter.FruitViewHolder>() {
         holder.binding.executePendingBindings()
     }
 
-    fun submitFruits(newFruits: MutableList<FruitItem>) {
+    fun submitFruits(newFruits: List<FruitItem>) {
         //could be better to use DiffUtils for better performance
         fruits = newFruits
         notifyDataSetChanged()
